@@ -22,7 +22,7 @@ class AdminApi extends Controller
             'http://127.0.0.1:5173',
         ];
         $host = $_SERVER['HTTP_HOST'] ?? '';
-        $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+        $scheme = $this->request_scheme();
         if ($host !== '') {
             $allowed[] = $scheme . '://' . $host;
         }
@@ -31,6 +31,16 @@ class AdminApi extends Controller
             header('Access-Control-Allow-Credentials: true');
             header('Vary: Origin');
         }
+    }
+
+    private function request_scheme()
+    {
+        $forwardedProto = strtolower(trim(explode(',', $_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '')[0]));
+        if (in_array($forwardedProto, ['http', 'https'], true)) {
+            return $forwardedProto;
+        }
+
+        return (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
     }
 
     private function input()
@@ -58,7 +68,7 @@ class AdminApi extends Controller
             'http://127.0.0.1:5173',
         ];
         $host = $_SERVER['HTTP_HOST'] ?? '';
-        $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+        $scheme = $this->request_scheme();
         if ($host !== '') {
             $allowed[] = $scheme . '://' . $host;
         }
