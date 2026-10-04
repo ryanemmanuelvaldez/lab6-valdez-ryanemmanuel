@@ -45,3 +45,36 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 /** @var object $router **/
 
 $router->get('/', 'Welcome::index');
+$router->get('create-migration/{migration_class}', 'MigrationController::create_migration');
+
+$router->get('migrate', 'MigrationController::migrate');
+
+$router->get('rollback', 'MigrationController::rollback');
+
+$router->get('rollback-all', 'MigrationController::rollback_all');
+
+$router->get('refresh', 'MigrationController::refresh');
+
+$router->get('status', 'MigrationController::status');
+
+$router->get('api/auth/bootstrap', 'AdminApi::bootstrap_status');
+$router->post('api/auth/bootstrap', 'AdminApi::bootstrap');
+$router->post('api/auth/login', 'AdminApi::login');
+$router->get('api/auth/me', 'AdminApi::me');
+$router->post('api/auth/logout', 'AdminApi::logout');
+$router->get('api/dashboard', 'AdminApi::dashboard');
+$router->get('api/users', 'AdminApi::users');
+$router->post('api/users', 'AdminApi::create_user');
+$router->patch('api/users/{id}', 'AdminApi::update_user');
+$router->delete('api/users/{id}', 'AdminApi::delete_user');
+$router->get('api/products', 'AdminApi::products');
+$router->post('api/products', 'AdminApi::create_product');
+$router->put('api/products/{id}', 'AdminApi::update_product');
+$router->patch('api/products/{id}', 'AdminApi::update_product');
+$router->delete('api/products/{id}', 'AdminApi::delete_product');
+$router->get('api/migrations', 'AdminApi::migrations');
+$router->post('api/migrations/run', 'AdminApi::run_migrations');
+$router->post('api/account/login', 'AccountApi::login');
+$router->get('api/account/me', 'AccountApi::me');
+$router->post('api/account/logout', 'AccountApi::logout');
+$router->get('api/account/catalog', 'AccountApi::catalog');

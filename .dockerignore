@@ -1,0 +1,10 @@
+.git
+.env
+.env.*
+!.env.example
+frontend/node_modules
+node_modules
+public/admin
+runtime/*
+!runtime/.htaccess
+!runtime/index.html

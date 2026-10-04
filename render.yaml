@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: lab6-lavalust
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: DB_DRIVER
+        value: mysql
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        sync: false
+      - key: DB_USER
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: DB_NAME
+        sync: false
+      - key: DB_CHARSET
+        value: utf8mb4
+      - key: API_JWT_SECRET
+        sync: false
+      - key: API_REFRESH_TOKEN_KEY
+        sync: false

@@ -183,6 +183,44 @@ $database['main'] = array(
 $config['base_url'] = 'http://localhost:3000/';
 ```
 
+## Product CRUD application
+
+The React admin application is built from `frontend/` into `public/admin/`.
+It uses the Aiven MySQL connection configured through the project's `.env`
+and the session-authenticated LavaLust API.
+
+The products table includes the required `id`, `product_name`, `description`,
+`price`, `quantity`, and `created_at` fields. Existing inventory columns are
+kept for compatibility with earlier records and screens. Migration
+`005_product_api_schema` adds the required fields and copies existing product
+names and stock quantities without dropping the old columns.
+
+After signing in as an administrator, open **Migrations** in the admin app and
+run pending migrations before managing products. Product endpoints are
+`GET /api/products`, `POST /api/products`, `PUT /api/products/{id}`,
+`PATCH /api/products/{id}`, and `DELETE /api/products/{id}`. All product CRUD
+endpoints require an active administrator session; unauthenticated requests
+return HTTP 401.
+
+### Deploy on Render
+
+The repository includes a Render Blueprint (`render.yaml`) and a Dockerfile
+that builds the React frontend and serves it with the LavaLust PHP API. Connect
+your own GitHub repository to Render and create a Blueprint using this file.
+Do not deploy the local `.env`; it is excluded from both Git and the Docker
+build context.
+
+Set the Aiven connection values (`DB_HOST`, `DB_PORT`, `DB_USER`,
+`DB_PASSWORD`, and `DB_NAME`) in Render's Environment settings. Generate
+different random values of at least 32 characters for `API_JWT_SECRET` and
+`API_REFRESH_TOKEN_KEY`. Keep the Aiven database credentials private and
+allowlist the Render service's outbound IP addresses in Aiven if required by
+the database's network access settings. Once deployed, the admin app is at
+`https://<your-render-service>.onrender.com/admin/`.
+
+The app uses the existing admin account in the configured database. Run
+pending migrations from **Migrations** after the first sign-in if needed.
+
 ---
 
 ## Building a REST API

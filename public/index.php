@@ -78,6 +78,14 @@ define('SYSTEM_DIR', ROOT_DIR . $system_path . DIRECTORY_SEPARATOR);
 define('APP_DIR', ROOT_DIR . $application_folder . DIRECTORY_SEPARATOR);
 define('PUBLIC_DIR', $public_folder);
 
+if (isset($_GET['route']) && is_string($_GET['route'])) {
+	$route = trim($_GET['route'], '/');
+	if (preg_match('~^api/[a-zA-Z0-9/_-]+$~', $route)) {
+		$_SERVER['SCRIPT_NAME'] = '/index.php';
+		$_SERVER['REQUEST_URI'] = '/' . $route;
+	}
+}
+
 /*
  * ------------------------------------------------------
  * Setup done? Then Hurray!
