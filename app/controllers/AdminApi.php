@@ -17,10 +17,8 @@ class AdminApi extends Controller
     private function set_cors_headers()
     {
         $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
-        $allowed = [
-            'http://localhost:5173',
-            'http://127.0.0.1:5173',
-        ];
+        $allowed = config_item('allow_origin');
+        $allowed = is_array($allowed) ? $allowed : [];
         $host = $_SERVER['HTTP_HOST'] ?? '';
         $scheme = $this->request_scheme();
         if ($host !== '') {
@@ -63,10 +61,8 @@ class AdminApi extends Controller
             return;
         }
 
-        $allowed = [
-            'http://localhost:5173',
-            'http://127.0.0.1:5173',
-        ];
+        $allowed = config_item('allow_origin');
+        $allowed = is_array($allowed) ? $allowed : [];
         $host = $_SERVER['HTTP_HOST'] ?? '';
         $scheme = $this->request_scheme();
         if ($host !== '') {

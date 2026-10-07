@@ -36,11 +36,9 @@ class AccountApi extends Controller
         $scheme = in_array($forwardedProto, ['http', 'https'], true)
             ? $forwardedProto
             : ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http');
-        $allowed = [
-            'http://localhost:5173',
-            'http://127.0.0.1:5173',
-            $scheme . '://' . $host,
-        ];
+        $allowed = config_item('allow_origin');
+        $allowed = is_array($allowed) ? $allowed : [];
+        $allowed[] = $scheme . '://' . $host;
         if (!in_array($origin, $allowed, true)) {
             $this->respond(['error' => 'Request origin is not allowed.'], 403);
         }
