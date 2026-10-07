@@ -6,5 +6,14 @@ class Welcome extends Controller {
 		header('Location: admin/');
 		exit;
 	}
+
+	public function api_status() {
+		header('Content-Type: application/json; charset=utf-8');
+		header('Cache-Control: no-store');
+		echo json_encode([
+			'status' => 'connected',
+			'service' => 'LavaLust API',
+		]);
+	}
 }
 ?>

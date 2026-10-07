@@ -45,6 +45,7 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 /** @var object $router **/
 
 $router->get('/', 'Welcome::index');
+$router->get('api', 'Welcome::api_status');
 $router->get('create-migration/{migration_class}', 'MigrationController::create_migration');
 
 $router->get('migrate', 'MigrationController::migrate');
